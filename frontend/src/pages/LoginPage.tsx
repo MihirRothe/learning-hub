@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../api/axios';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +13,7 @@ const LoginPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post('/api/auth/login', { email, password });
+            const { data } = await api.post('/auth/login', { email, password });
             login(data);
             navigate('/');
         } catch (err: any) {
