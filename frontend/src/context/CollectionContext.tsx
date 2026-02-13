@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
@@ -29,7 +29,7 @@ export const CollectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [loading, setLoading] = useState(true);
     const { user } = useAuth();
 
-    const fetchCollections = async () => {
+    const fetchCollections = useCallback(async () => {
         if (!user) return;
         try {
             const { data } = await axios.get('/api/collections', {
@@ -41,11 +41,11 @@ export const CollectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchCollections();
-    }, [user]);
+    }, [fetchCollections]);
 
     const createCollection = async (collectionData: Partial<Collection>) => {
         if (!user) return;

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
@@ -34,7 +34,7 @@ export const ResourceProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [loading, setLoading] = useState(true);
     const { user } = useAuth();
 
-    const fetchResources = async (search: string = '') => {
+    const fetchResources = useCallback(async (search: string = '') => {
         if (!user) return;
         try {
             const { data } = await axios.get(`/api/resources${search ? `?search=${search}` : ''}`, {
@@ -46,11 +46,11 @@ export const ResourceProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     useEffect(() => {
         fetchResources();
-    }, [user]);
+    }, [fetchResources]);
 
     const addResource = async (resourceData: Partial<Resource>) => {
         if (!user) return;

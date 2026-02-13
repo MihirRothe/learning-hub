@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ResourceProvider } from './context/ResourceContext';
@@ -17,7 +17,7 @@ import NotFoundPage from './pages/NotFoundPage';
 // Placeholder Pages
 const Discover = () => <div className="text-2xl font-bold">Discover Placeholder</div>;
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useAuth();
   if (loading) return <div>Loading...</div>;
   if (!user) return <Navigate to="/login" />;
