@@ -40,7 +40,7 @@ export const ResourceProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             const { data } = await axios.get(`/api/resources${search ? `?search=${search}` : ''}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
-            setResources(data);
+            setResources(data || []);
         } catch (error) {
             console.error('Error fetching resources:', error);
         } finally {
