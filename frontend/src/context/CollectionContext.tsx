@@ -35,7 +35,7 @@ export const CollectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
             const { data } = await axios.get('/api/collections', {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
-            setCollections(data);
+            setCollections(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error fetching collections:', error);
         } finally {

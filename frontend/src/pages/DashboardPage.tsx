@@ -28,8 +28,8 @@ const DashboardPage: React.FC = () => {
                     axios.get('/api/discovery/recent', config)
                 ]);
 
-                setRecommendedCollections(recRes.data || []);
-                setRecentResources(recentRes.data || []);
+                setRecommendedCollections(Array.isArray(recRes.data) ? recRes.data : []);
+                setRecentResources(Array.isArray(recentRes.data) ? recentRes.data : []);
             } catch (error) {
                 console.error('Error fetching discovery data:', error);
             } finally {
